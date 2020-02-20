@@ -1,0 +1,39 @@
+# myself define.
+out/
+
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.appe/ 思想：每次拿出找出一个最大的，放到数组后面
+	// 1. 外层循环（查找次数）：n个数，找n-1次
+	// 2. 内层循环（找到剩余数组中最大的数）：剩余n-i个数，比较n-i-1次。
+
