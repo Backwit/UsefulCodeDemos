@@ -1,6 +1,6 @@
 # myself define.
 out/
-
+bk_*
 
 # Prerequisites
 *.d
