@@ -7,7 +7,7 @@
 
 using namespace std;
 
-#define TESTCASEPATH "./testcase"
+#define TESTCASEPATH "./testcase.config"
 
 bool ReadTestCase(vector<vector<int> >& testcase) {
 	std::ifstream ifs(TESTCASEPATH, ios::in);
