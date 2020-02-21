@@ -40,14 +40,82 @@ void InsertSort(vector<int>& nums)
 	}
 }
 
-
-
 // 3.选择排序
+//  思想：每次找剩下中最小的。
+//		1.外层循环：从0位到n-2位，总共n-1次选择，最后一位就不用选了
+//		2.内层循环：第i位依次与后面的n-i位比较，找到剩下最小的，放到i位上。
+void SelectSort(vector<int>& nums)
+{
+	int len = nums.size();
+	for(int i = 0; i < len - 1; i++){
+		int minindex = i; //减少交换次数
+		for(int j = i+1; j < len; j++){
+			if(nums[minindex] > nums[j]) {
+				minindex = j;
+			}
+		}
+		if(minindex != i){
+			std::swap(nums[i], nums[minindex]);
+		}
+	}
+}
+
 // 4.归并排序
+//	思想：
+//		1.分成两块 左 右
+//		2.左边 递归排好， 右边 递归排好
+//		3.整合
+void Merge(vector<int>& res, vector<int>& left, vector<int>& right)
+{
+	int ls = left.size();
+	int rs = right.size();
+	int sum = res.size();
+	
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	while(i < sum) {
+		if (j == ls && k < rs){
+			res[i++] = right[k++];
+		} else if(k == rs && j < ls){
+			res[i++] = left[j++];
+		} else { // j<ls &&k<rs
+			if(left[j] <= right[k]){
+				res[i++] = left[j++];
+			} else {
+				res[i++] = right[k++];
+			}
+		}
+	}
+}
+
+void MergeSort(vector<int>& nums)
+{
+	int len = nums.size();
+	if(len <= 1){
+		return;
+	}
+	int mid = (len-1)/2;
+	vector<int> left(nums.begin(), nums.begin() + mid + 1);
+	vector<int> right(nums.begin() + mid + 1, nums.end());
+
+	MergeSort(left);
+	MergeSort(right);
+	Merge(nums, left, right);
+} 
 // 5.快速排序
+void QuickSort(vector<int>& nums)
+{
+
+}
+
+
 // 6.堆排序
 // 7.桶排序
 
+// 8.希尔排序
+//
+//
 
 
 
@@ -60,6 +128,14 @@ int main()
 	std::cout<<"*****************************************\n";
 	res = VerifySort(InsertSort) ? "pass" : "fail";
 	std::cout<<"verify InsertSort: "<<res<<std::endl;
+
+	std::cout<<"*****************************************\n";
+	res = VerifySort(SelectSort) ? "pass" : "fail";
+	std::cout<<"verify SelectSort: "<<res<<std::endl;
+
+	std::cout<<"*****************************************\n";
+	res = VerifySort(MergeSort) ? "pass" : "fail";
+	std::cout<<"verify MergeSort: "<<res<<std::endl;
 
 	return 0;
 }
