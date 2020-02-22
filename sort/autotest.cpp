@@ -23,7 +23,7 @@ bool ReadTestCase(vector<vector<int> >& testcase) {
 		string tmp(buf);
 		
 		int k = 0;
-		while (k < tmp.size() && tmp[k] != ']') {
+		while (k < static_cast<int>(tmp.size()) && tmp[k] != ']') {
 			if(tmp[k] == ' ') { 
 				tmp.erase(k, 1);
 			}else{
@@ -32,7 +32,7 @@ bool ReadTestCase(vector<vector<int> >& testcase) {
 		}
 		//std::cout<<"remove space: "<<tmp<<std::endl;
 
-		if(tmp.size() <= 0 || tmp[0] != '[') {
+		if(static_cast<int>(tmp.size()) <= 0 || tmp[0] != '[') {
 			continue;
 		}
 
@@ -40,9 +40,9 @@ bool ReadTestCase(vector<vector<int> >& testcase) {
 		bool vaild = true;
 		int i = 1;
 		//std::cout<<"tmp.size = "<<tmp.size()<<std::endl;
-		while(i < tmp.size()) {
+		while(i < static_cast<int>(tmp.size())) {
 			int j = i;
-			while(j < tmp.size() && tmp[j] != ']') {
+			while(j < static_cast<int>(tmp.size()) && tmp[j] != ']') {
 				if (tmp[j] >= '0' && tmp[j] <= '9') {
 					j++;
 					continue;
@@ -108,23 +108,26 @@ bool VerifySort(std::function<void(vector<int>&)> testSort, vector<int> onecase/
 		}
 	}
 
-	for(auto v : testcase) {
-		vector<int> verifyRes(v);
-		vector<int> rightRes(v);
+	int failNums = 0;
+	for(int i = 0; i < static_cast<int>(testcase.size()); i++) {
+		vector<int> verifyRes(testcase[i]);
+		vector<int> rightRes(testcase[i]);
 		testSort(verifyRes);
 		std::sort(rightRes.begin(), rightRes.end());
 
-		std::cout<<"## Test Case : ";
-		printVector(v);
+		std::cout<<"## Test Case " << i <<" : ";
+		printVector(testcase[i]);
 		std::cout<<"  My result  : ";
 		printVector(verifyRes);
 		std::cout<<"  Right Sort : ";
 		printVector(rightRes);
 		
 		if(verifyRes != rightRes) {
-			return false;
+			std::cout<<"!!!! Test Result: fail\n";
+			failNums++;
 		}
 	}
-	return true;
+	std::cout<<"## Test Nums: "<<testcase.size()<<", fail: "<<failNums<<std::endl;
+	return (failNums > 0) ? false : true;
 }
 

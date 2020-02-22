@@ -103,10 +103,50 @@ void MergeSort(vector<int>& nums)
 	MergeSort(right);
 	Merge(nums, left, right);
 } 
+
 // 5.快速排序
 void QuickSort(vector<int>& nums)
 {
+	int len = nums.size();
+	if(len <= 1) {
+		return;
+	}
+	int i = 1;
+	int j = len - 1;
 
+	int pivot = 0;
+
+	while (i != j) {
+		while(j > i && nums[j] >= nums[pivot]){
+			j--;
+		}
+		while(i < j && nums[i] <= nums[pivot]){
+			i++;
+		}
+		if (i < j) {
+			std::swap(nums[i], nums[j]);
+		}
+	}
+	if(nums[i] > nums[pivot]) {
+		i--;
+	}
+	std::swap(nums[pivot], nums[i]);
+	pivot = i;
+
+	if(pivot != 0){
+		vector<int> left(nums.begin(), nums.begin() + i);
+		QuickSort(left);
+		for(int i = 0; i < static_cast<int>(left.size()); i++) {
+			nums[i] = left[i];
+		}
+	}
+	if(pivot != len -1 ) {
+		vector<int> right(nums.begin()+pivot+1, nums.end());
+		QuickSort(right);
+		for(vector<int>::size_type i = 0; i < right.size(); i++) {
+			nums[pivot+1+i] = right[i];
+		}
+	}
 }
 
 
@@ -136,6 +176,11 @@ int main()
 	std::cout<<"*****************************************\n";
 	res = VerifySort(MergeSort) ? "pass" : "fail";
 	std::cout<<"verify MergeSort: "<<res<<std::endl;
+
+	std::cout<<"*****************************************\n";
+	res = VerifySort(QuickSort) ? "pass" : "fail";
+	std::cout<<"verify QuickSort: "<<res<<std::endl;
+
 
 	return 0;
 }
