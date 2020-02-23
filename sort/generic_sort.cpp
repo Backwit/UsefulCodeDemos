@@ -1,11 +1,15 @@
-#include<iostream>
-#include<vector>
-#include<algorithm>
-#include<string>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
-#include"autotest.h"
+#include "generic_sort.h"
+#include "autotest.h"
+#include "heap.h"
+
+
 using namespace std;
 
+/*********************************************************************/
 // 1.冒泡排序(Bubble sort)
 //  思想：每次拿出找出一个最大的，放到数组后面
 //    1. 外层循环（查找次数）：n个数，找n-1次
@@ -22,6 +26,7 @@ void BubbleSort(vector<int>& nums)
 	}
 }
 
+/*********************************************************************/
 // 2.插入排序
 //  思想：从第二个开始逐个与前面排好的比较，要是小就往前移，要是比前面大，就是跳出循环，继续排下一个树。
 //    1. 外层循环（插入次数）；从第2个开始，逐个向前插入，所以是 2->n, n-1次循环
@@ -40,7 +45,46 @@ void InsertSort(vector<int>& nums)
 	}
 }
 
-// 3.选择排序
+/*********************************************************************/
+// 3.希尔排序
+//	思想：带间隔的插入排序。
+//	1.外层: 按间隔来的，n/k、n/(k*k) ... 1
+//	2.内层：插入排序
+void ShellSort(vector<int>& nums)
+{
+	int len = nums.size();
+	for(int k = len>>1; k >= 1; k = k>>1) {
+		std::cout<<"k= "<<k<<std::endl;
+		for(int i = k; i < len; i += k) {
+			for(int j = i; j > 0; j -= k){
+				if(nums[j] < nums[j-k]) {
+					std::swap(nums[j-k], nums[j]);
+				} else {
+					break;
+				}
+			}
+		}
+	}
+}
+
+//更具有希尔排序特点的写法：
+// dt表示一个增量的数组（n/k -> 1）
+// void ShellSort(vector<int>& nums, vector<int>& dt){
+//     for(auto k : dt){
+//			ShellInsertSort(nums, k);
+//     } 
+//
+// }
+//
+// void ShellInsertSort(vector<int>& nums, int k){
+//     for(int i = k; i<n; i+=k)
+//		   for(int j=i; j>0; j-=k)
+// }
+//
+
+/*********************************************************************/
+
+// 4.选择排序
 //  思想：每次找剩下中最小的。
 //    1.外层循环：从0位到n-2位，总共n-1次选择，最后一位就不用选了
 //    2.内层循环：第i位依次与后面的n-i位比较，找到剩下最小的，放到i位上。
@@ -60,7 +104,8 @@ void SelectSort(vector<int>& nums)
 	}
 }
 
-// 4.归并排序
+/*********************************************************************/
+// 5.归并排序
 //  思想：
 //    1.分成两块 左 右
 //    2.左边 递归排好， 右边 递归排好
@@ -104,7 +149,11 @@ void MergeSort(vector<int>& nums)
 	Merge(nums, left, right);
 } 
 
-// 5.快速排序
+/*********************************************************************/
+// 6.快速排序
+//  思想：任选其中一个数，把小于它的，放在左边，大于它的，放在它右边，然后递归。。。
+//
+//
 void QuickSort(vector<int>& nums)
 {
 	int len = nums.size();
@@ -150,37 +199,30 @@ void QuickSort(vector<int>& nums)
 }
 
 
-// 6.堆排序
-// 7.桶排序
-
-// 8.希尔排序
+/*********************************************************************/
+// 7.堆排序
 //
-//
-
-
-
-int main()
+/*利用stl标准库实现堆排序*/
+void HeapSort(vector<int>& nums)
 {
-	std::cout<<"*****************************************\n";
-	string res = VerifySort(BubbleSort) ? "pass" : "fail";
-	std::cout<<"verify BubbleSort: "<<res<<std::endl;
-
-	std::cout<<"*****************************************\n";
-	res = VerifySort(InsertSort) ? "pass" : "fail";
-	std::cout<<"verify InsertSort: "<<res<<std::endl;
-
-	std::cout<<"*****************************************\n";
-	res = VerifySort(SelectSort) ? "pass" : "fail";
-	std::cout<<"verify SelectSort: "<<res<<std::endl;
-
-	std::cout<<"*****************************************\n";
-	res = VerifySort(MergeSort) ? "pass" : "fail";
-	std::cout<<"verify MergeSort: "<<res<<std::endl;
-
-	std::cout<<"*****************************************\n";
-	res = VerifySort(QuickSort) ? "pass" : "fail";
-	std::cout<<"verify QuickSort: "<<res<<std::endl;
-
-
-	return 0;
+// 需要先用make_heap把vector变成一个堆，然后再用sort_heap进行排序。
+	std::make_heap(nums.begin(), nums.end(), [](int& x, int& y){return x<y;});
+	std::sort_heap(nums.begin(), nums.end(), [](int& x, int& y){return x<y;});
 }
+
+/*自己实现堆*/
+void HeapSort2(vector<int>& nums)
+{
+	BuildHeap(nums, static_cast<int>(nums.size()));
+	SortHeap(nums);
+	
+	// 构建大顶堆，降序排列
+	// BuildHeap(nums, static_cast<int>(nums.size()), 1);
+	// SortHeap(nums, 1);
+}
+
+
+/*********************************************************************/
+// 8.桶排序
+
+
