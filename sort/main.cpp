@@ -41,5 +41,9 @@ int main()
 	res = VerifySort(HeapSort2) ? "pass" : "fail";
 	std::cout<<"verify HeapSort2: "<<res<<std::endl;
 
+	std::cout<<"*****************************************\n";
+	res = VerifySort(CountingSort) ? "pass" : "fail";
+	std::cout<<"verify CountingSort: "<<res<<std::endl;
+
 	return 0;
 }

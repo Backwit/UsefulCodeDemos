@@ -222,7 +222,61 @@ void HeapSort2(vector<int>& nums)
 }
 
 
+/*非比较排序*/
 /*********************************************************************/
-// 8.桶排序
+// 8.计数排序
+// 适用于目标数据比较集中在一个范围的情况。
+//   1）find min 和 max, 创建一个max-min+1的数组，表示这个范围上各个数出现的次数
+//   2）遍历数组，填充count数组。
+//   3）按count数组，重新填充目标数组，实现排序。
+void CountingSort(vector<int>& nums)
+{
+	int len = nums.size();
+	if(len <= 1){
+		return;
+	}
+	// 1. find max and min nums
+	int maxNums = nums[0];
+	int minNums = nums[0];
+
+	for(int i = 1; i < len; i++) {
+		maxNums = (nums[i] > maxNums) ? nums[i] : maxNums;
+		minNums = nums[i] < minNums ? nums[i] : minNums;
+	} 
+
+	if(maxNums == minNums){
+		return;
+	}
+
+	// 2. count 数组 记录每个数出现的次数
+	vector<int> count(maxNums - minNums + 1, 0);
+	for(int i = 0; i < len; i++){
+		count[nums[i] - minNums]++;
+	}
+
+	// 3. 计算每个数的结束位置，方便下面进一步把数放到对应的位置
+	for(unsigned int i = 1; i < count.size(); i++) {
+		count[i] += count[i-1];
+	}
+
+	vector<int> tmp(nums);	
+	for(unsigned int i = 0; i < len; i++) {
+		nums[--count[tmp[i]-minNums]] = tmp[i];
+	}
+}
+
+
+
+/*********************************************************************/
+// 9.桶排序
+
+
+
+/*********************************************************************/
+// 10.基数排序
+
+
+
+
 
 

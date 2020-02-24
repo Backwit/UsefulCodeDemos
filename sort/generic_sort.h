@@ -11,5 +11,6 @@ void MergeSort(vector<int>& nums);
 void QuickSort(vector<int>& nums);
 void HeapSort(vector<int>& nums);
 void HeapSort2(vector<int>& nums);
+void CountingSort(vector<int>& nums);
 
 #endif
