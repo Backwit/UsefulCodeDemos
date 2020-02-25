@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <vector>
 
@@ -277,23 +278,23 @@ void CountingSort(vector<int>& nums)
 //   比较适合数组中的各数的位数差不多的情况
 //
 
-/*
- * n:表示分割为多少位
- */
-vector<vector<int> > SplitInt(vector<int> nums, int n)
-{
-	vector<vector<int> > res;
-	for (unsigned i = 0; i < nums.size(); i++) {
-		vector<int> tmp(n, 0);
-		for (int j = n-1; j >= 0; j--) {
-			tmp[j] = nums[i] % 10;
-			nums[i] /= 10;
-		}
-		res.push_back(tmp);
-	}
-	return res;
-}
-
+// pow函数可以用来求次方，可以快速求出各个位上的数，所以不需要这个函数了
+// /*
+//  * n:表示分割为多少位
+//  */
+// vector<vector<int> > SplitInt(vector<int> nums, int n)
+// {
+// 	vector<vector<int> > res;
+// 	for (unsigned i = 0; i < nums.size(); i++) {
+// 		vector<int> tmp(n, 0);
+// 		for (int j = n-1; j >= 0; j--) {
+// 			tmp[j] = nums[i] % 10;
+// 			nums[i] /= 10;
+// 		}
+// 		res.push_back(tmp);
+// 	}
+// 	return res;
+// }
 
 void RadixSort(vector<int>& nums)
 {
@@ -328,11 +329,13 @@ void RadixSort(vector<int>& nums)
 	}
 	
 	// 按各个位排序	
-	for (int i = n - 1; i >= 0; i--) {
-		vector<vector<int> > spnum = SplitInt(nums, n);
+	for (int i = 1; i <= n; i++) {
+		//vector<vector<int> > spnum = SplitInt(nums, n);
 		vector<vector<int> > tmpVec(10, vector<int>());
 		for (int j = 0; j < len; j++) {
-			tmpVec[spnum[j][i]].push_back(nums[j]);
+			//tmpVec[spnum[j][i]].push_back(nums[j]);
+			int count = nums[j]%(static_cast<int>(pow(10, i)))/(static_cast<int>(pow(10, i-1)));
+			tmpVec[count].push_back(nums[j]);
 		}
 		int index = 0;
 		for(int k = 0; k < 10; k++) {
