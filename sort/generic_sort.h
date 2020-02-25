@@ -12,5 +12,6 @@ void QuickSort(vector<int>& nums);
 void HeapSort(vector<int>& nums);
 void HeapSort2(vector<int>& nums);
 void CountingSort(vector<int>& nums);
+void RadixSort(vector<int>& nums);
 
 #endif

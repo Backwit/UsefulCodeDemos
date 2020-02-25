@@ -73,6 +73,8 @@ bool ReadTestCase(vector<vector<int> >& testcase) {
 
 	}	
 
+	ifs.close();	
+
 	std::cout<<"testcase size : "<<testcase.size()<<std::endl;
 /*	if (!testcase.empty()) {
 		for(auto &a : testcase) {

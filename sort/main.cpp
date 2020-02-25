@@ -45,5 +45,8 @@ int main()
 	res = VerifySort(CountingSort) ? "pass" : "fail";
 	std::cout<<"verify CountingSort: "<<res<<std::endl;
 
+	std::cout<<"*****************************************\n";
+	res = VerifySort(RadixSort) ? "pass" : "fail";
+	std::cout<<"verify RadixSort: "<<res<<std::endl;
 	return 0;
 }

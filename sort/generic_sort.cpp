@@ -1,9 +1,9 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
-#include "generic_sort.h"
 #include "autotest.h"
+#include "generic_sort.h"
 #include "heap.h"
 
 
@@ -260,7 +260,7 @@ void CountingSort(vector<int>& nums)
 	}
 
 	vector<int> tmp(nums);	
-	for(unsigned int i = 0; i < len; i++) {
+	for(int i = 0; i < len; i++) {
 		nums[--count[tmp[i]-minNums]] = tmp[i];
 	}
 }
@@ -274,7 +274,80 @@ void CountingSort(vector<int>& nums)
 
 /*********************************************************************/
 // 10.基数排序
+//   比较适合数组中的各数的位数差不多的情况
+//
 
+/*
+ * n:表示分割为多少位
+ */
+vector<vector<int> > SplitInt(vector<int> nums, int n)
+{
+	vector<vector<int> > res;
+	for (unsigned i = 0; i < nums.size(); i++) {
+		vector<int> tmp(n, 0);
+		for (int j = n-1; j >= 0; j--) {
+			tmp[j] = nums[i] % 10;
+			nums[i] /= 10;
+		}
+		res.push_back(tmp);
+	}
+	return res;
+}
+
+
+void RadixSort(vector<int>& nums)
+{
+	int len =  nums.size();
+	if (len <= 1) {
+		return;
+	}
+
+	int maxNum = nums[0];
+	int minNum = nums[0];
+
+	for (int i = 1; i < len; i++) {
+		maxNum = nums[i] > maxNum ? nums[i] : maxNum;
+		minNum = nums[i] < minNum ? nums[i] : minNum;
+	}
+
+	// negative number (将负数变为正数)
+	if (minNum < 0) {
+		for_each(nums.begin(), nums.end(), [&](int x){return x-minNum;});
+		maxNum -= minNum; 
+	}
+
+	int n = 0;
+	int tmp = maxNum;
+	while (tmp) {
+		tmp /= 10;
+		n++;
+	}
+
+	if (n == 0) {
+		return;
+	}
+	
+	// 按各个位排序	
+	for (int i = n - 1; i >= 0; i--) {
+		vector<vector<int> > spnum = SplitInt(nums, n);
+		vector<vector<int> > tmpVec(10, vector<int>());
+		for (int j = 0; j < len; j++) {
+			tmpVec[spnum[j][i]].push_back(nums[j]);
+		}
+		int index = 0;
+		for(int k = 0; k < 10; k++) {
+			if(!tmpVec[k].empty()) {
+				for(auto & a : tmpVec[k]) {
+					nums[index++] = a;
+				}
+			}
+		}
+	}
+	
+	if (minNum < 0) {
+		for_each(nums.begin(), nums.end(), [&](int x){return x+minNum;});
+	}
+}
 
 
 
