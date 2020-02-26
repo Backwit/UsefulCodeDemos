@@ -12,17 +12,22 @@ using namespace std;
 
 /*********************************************************************/
 // 1.冒泡排序(Bubble sort)
-//  思想：每次拿出找出一个最大的，放到数组后面
-//    1. 外层循环（查找次数）：n个数，找n-1次
+//  思想：相邻的数依次比较，比后面的大 就交换。
+//    1. 外层循环: 0 -> n-2， n-1次循环，每次把最大的数换到最后面
 //    2. 内层循环（找到剩余数组中最大的数）：剩余n-i个数，比较n-i-1次。
 void BubbleSort(vector<int>& nums)
 {
 	int len = nums.size();
-	for(int i = 1; i < len; ++i) { //n-1次
-		for(int j = 0; j < len - i; j++) {
+	for(int i = 0; i < len - 1; ++i) { //n-1次
+		int flag = 0; // 用于优化冒泡排序，当一趟排序没有交换时，说明已经排好了。
+		for(int j = 0; j < len - i -1; j++) {
 			if(nums[j] > nums[j+1]) {
 				std::swap(nums[j], nums[j+1]);
+				flag = 1;
 			}
+		}
+		if (!flag) {
+			return;
 		}
 	}
 }
@@ -55,7 +60,6 @@ void ShellSort(vector<int>& nums)
 {
 	int len = nums.size();
 	for(int k = len>>1; k >= 1; k = k>>1) {
-		std::cout<<"k= "<<k<<std::endl;
 		for(int i = k; i < len; i += k) {
 			for(int j = i; j > 0; j -= k){
 				if(nums[j] < nums[j-k]) {
