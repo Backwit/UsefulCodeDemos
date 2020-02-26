@@ -90,14 +90,14 @@ void ShellSort(vector<int>& nums)
 /*********************************************************************/
 
 // 4.选择排序
-//  思想：每次找剩下中最小的。
+//  思想：每次找剩下中最小的, 与当前位交换。
 //    1.外层循环：从0位到n-2位，总共n-1次选择，最后一位就不用选了
 //    2.内层循环：第i位依次与后面的n-i位比较，找到剩下最小的，放到i位上。
 void SelectSort(vector<int>& nums)
 {
 	int len = nums.size();
 	for(int i = 0; i < len - 1; i++){
-		int minindex = i; //减少交换次数
+		int minindex = i; 
 		for(int j = i+1; j < len; j++){
 			if(nums[minindex] > nums[j]) {
 				minindex = j;
