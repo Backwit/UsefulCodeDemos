@@ -13,5 +13,6 @@ void HeapSort(vector<int>& nums);
 void HeapSort2(vector<int>& nums);
 void CountingSort(vector<int>& nums);
 void RadixSort(vector<int>& nums);
+void BucketSort(vector<int>& nums, int bucketNum = 10);
 
 #endif

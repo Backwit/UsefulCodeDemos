@@ -270,6 +270,58 @@ void CountingSort(vector<int>& nums)
 
 /*********************************************************************/
 // 9.桶排序
+//	假设数据均匀分布，将数据按一定范围均匀分开，放在几个桶中，
+//	然后在分别对每个桶排序（可以用其他的排序方法，或者递归的桶排序）。
+//	最后再把排好的各个桶的数据 合起来。
+//
+//	各个数在哪个桶：
+//	 deta = (max - min)/bucketNum + 1; //避免桶的大小为0
+//	 whichbucket = (num - min)/deta;
+//
+//	 1 2 3 4 5 6 7 8 9 10; 
+//	 bucketNum = 5
+//   deta = 2
+//   (1-1)/2 = 0; (2-1)/2 = 0
+//   1 2 | 3 4 | 5 6 | 7 8 | 9 10
+//
+//	bucketNum:指定桶的个数，默认为10
+//
+void BucketSort(vector<int>& nums, int bucketNum/*= 10(default)*/)
+{
+	int len =  nums.size();
+	if (len <= 1) {
+		return;
+	}
+
+	int maxNum = nums[0];
+	int minNum = nums[0];
+
+	for (int i = 1; i < len; i++) {
+		maxNum = nums[i] > maxNum ? nums[i] : maxNum;
+		minNum = nums[i] < minNum ? nums[i] : minNum;
+	}
+
+	int deta = (maxNum - minNum) / bucketNum + 1;
+	
+	// set Bucket = 10
+	vector<vector<int> > bucket(bucketNum, vector<int>());
+	for (int i = 0; i < len; i++) {
+		int index = (nums[i] - minNum) / deta;
+		bucket[index].push_back(nums[i]);
+	}
+
+	vector<int> tmpres;
+	for (auto &v : bucket) {
+		// 选一种方式对每个桶排序，然后在填回nums
+		// 这里直接用sort排了算了
+		if (!v.empty()) {
+			std::sort(v.begin(), v.end());
+		}
+		tmpres.insert(tmpres.end(), v.begin(), v.end());
+	}
+	
+	nums = tmpres;
+}
 
 
 
@@ -351,8 +403,5 @@ void RadixSort(vector<int>& nums)
 		for_each(nums.begin(), nums.end(), [&](int x){return x+minNum;});
 	}
 }
-
-
-
 
 

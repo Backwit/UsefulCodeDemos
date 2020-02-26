@@ -2,6 +2,7 @@
 #include <string>
 #include "autotest.h"
 #include "generic_sort.h"
+#include<functional>
 
 using std::cout;
 using std::endl;
@@ -48,5 +49,11 @@ int main()
 	std::cout<<"*****************************************\n";
 	res = VerifySort(RadixSort) ? "pass" : "fail";
 	std::cout<<"verify RadixSort: "<<res<<std::endl;
+	
+	std::cout<<"*****************************************\n";
+	int bucketnums = 10;
+	res = VerifySort(std::bind(BucketSort, std::placeholders::_1, bucketnums)) ? "pass" : "fail";
+	std::cout<<"verify BucketSort: "<<res<<std::endl;
 	return 0;
+
 }
