@@ -58,6 +58,30 @@ int Kmp(string pat, string str)
 	return i == pat.size() ? j - i : -1;
 }
 
+/*
+ * 暴力brute force匹配算法 
+ */
+int BruteForce(string pat, string str)
+{
+	unsigned int i = 0;
+	unsigned int j = 0;
+	while(i < pat.size() && j < str.size()) {
+		if(pat[i] == str[j]){
+			i++;
+			j++;
+		}else{
+			j = j - i + 1;//主串从下个位置开始匹配
+			i = 0;
+		}
+	}
+	// 跳出循环 
+	// 1）i == pat.size(),说明子串全部已匹配
+	// 或 i != pat.size(),说明没找到，此时j == str.size()已经到最后了。
+
+	return i == pat.size() ? j - i : -1;
+}
+
+
 void printVector(vector<int>& nums)
 {
 	for(auto a:nums){
@@ -72,9 +96,10 @@ int main()
 	string pat("abd");
 
 	cout<<Kmp(pat, str)<<endl;
+	cout<<BruteForce(pat, str)<<endl;	
 
 	string test("abdabaa");
-	vector<int> next =  NextPos(test);
+	vector<int> next = NextPos(test);
 	printVector(next);
 
 	return 0;
