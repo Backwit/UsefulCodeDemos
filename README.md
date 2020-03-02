@@ -18,12 +18,13 @@ Some Basic Algorithm Implement by C++
 
 ### 查找
 
-- [ ] 顺序查找
-- [ ] 二分查找
+- [x] 顺序查找
+- [x] 二分查找
 
 ### 字符串
 
-- [ ] KMP算法
+- [x] KMP算法
+- [x] 暴力(Brute Force)匹配算法
 
 
 
