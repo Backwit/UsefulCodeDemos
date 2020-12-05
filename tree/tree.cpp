@@ -1,6 +1,11 @@
 #include <algorithm>
-#include <stack>
 #include <queue>
+#include <stack>
+#include <string>
+
+#include <stdlib.h> //atoi
+#include <string.h> //strtok
+
 #include "tree.h"
 
 /*
@@ -243,6 +248,70 @@ vector<vector<int> > LevelOrder(TreeNode* root)
 }
 
 /*
+ * 二叉树序列化：二叉树to字符串
+ * 和反序列化：字符串to二叉树
+ */
+// 用前序的方式序列化，空节点用 # 表示, 节点用 ! 隔开 
+string serialize(TreeNode* root)
+{
+	string str;
+	stack<TreeNode*> st;
+	if(root) st.push(root);
+	while(!st.empty()) {
+		root = st.top();
+		st.pop();
+		if(root) {
+			st.push(root->right);
+			st.push(root->left);
+			str += to_string(root->val) + '!';
+		}else{
+			str += "#!";
+		}
+	}
+
+	return str;
+}
+
+//按前序遍历的方法，用一个栈去辅助。栈里面一直放左节点。
+//要是左节点为空了，就弹出，并出其父节点，把右节点赋值，并压入栈中。
+//
+//使用strtok来分割字符串
+TreeNode* deserialize(string str)
+{
+	if(str.empty()) return NULL;
+
+	char* cstr = new char[str.length() +1];
+	strcpy(cstr, str.c_str());
+
+	char* p = strtok(cstr, "!");
+	TreeNode* root = new TreeNode(atoi(p));
+	stack<TreeNode*> st;
+	st.push(root);
+	while(p != NULL){
+		TreeNode* next = NULL;
+		p = strtok(NULL, "!");
+		if(p == NULL) {
+			break;
+		}
+		if(p[0] != '#'){
+			next = new TreeNode(atoi(p));
+		}
+		TreeNode* cur = st.top();
+		if(cur){
+			cur->left = next;
+		} else {
+			st.pop();
+			st.top()->right = next;
+			st.pop();
+		}
+		st.push(next);
+	}
+	
+	delete[] cstr;
+	return root;
+}
+
+/*
  * 构建二叉树：（需要个节点元素值不一样）
  *	已知前序遍历和中序遍历序列，可以唯一确定一棵二叉树。
  *	已知后序遍历和中序遍历序列，可以唯一确定一棵二叉树。
@@ -320,6 +389,17 @@ int main()
 	res = PostOrder2(root);
 	cout<<"PostOrder2: ";
 	printVector(res);
+
+	string str = serialize(root);
+	cout<<"serialize : "<<str<<endl;
+
+	TreeNode* root2 = deserialize(str);
+	cout<<"deserialize : ";
+	vector<int> se = PreOrderRecursion(root2);
+	printVector(se);
+	vector<int> se2 = InOrderRecursion(root2);
+	printVector(se2);
+	
 
 	return 0;
 }
