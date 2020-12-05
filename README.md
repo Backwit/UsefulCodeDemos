@@ -40,7 +40,8 @@ Some Basic Algorithm Implement by C++
 
 ### 树
 
-- [ ] 二叉树前序、中序、后序遍历
+- [x] 二叉树[前序](https://leetcode.com/problems/binary-tree-preorder-traversal/)、[中序](https://leetcode.com/problems/binary-tree-inorder-traversal/)、[后序](https://leetcode.com/problems/binary-tree-postorder-traversal/)遍历
+- [x] 二叉树[层序](https://leetcode.com/problems/binary-tree-level-order-traversal/)遍历
 - [ ] 二叉树的序列化和反序列化
 - [ ] AVL平衡二叉树
 - [ ] 红黑树
