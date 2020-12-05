@@ -192,8 +192,8 @@ vector<int> PostOrder2(TreeNode* root)
 		root = st.top();
 		res.push_back(root->val);
 		st.pop();
-		if(root->right) st.push(root->right);
 		if(root->left) st.push(root->left);
+		if(root->right) st.push(root->right);
 	}
 
 	reverse(res.begin(), res.end());
