@@ -1,5 +1,6 @@
-#include <stack>
 #include <algorithm>
+#include <stack>
+#include <queue>
 #include "tree.h"
 
 /*
@@ -201,7 +202,45 @@ vector<int> PostOrder2(TreeNode* root)
 	return res;
 }
 
+/*
+ * 层序遍历:
+ * 两个指针：last指向本层最后一个；
+ *			nlast指向队列的最后一个(队列每插入一个，nlast就更新到它)
+ * 这样：比如我们要弹出last之前，先把last的左右孩子压入队列。
+ * 然后弹出last的时候，nlast就是下一行的最后一个，把last更新为nlast。
+ *
+ */
+vector<vector<int> > LevelOrder(TreeNode* root)
+{
+	vector<vector<int> > res;
+	vector<int> nres;
+	TreeNode* last = root;
+	TreeNode* nlast = NULL;
+	queue<TreeNode*> qu;
+	if(root){
+		qu.push(root);
+	}
+	while(!qu.empty()) {
+		root = qu.front();
+		if(root->left) {
+			qu.push(root->left);
+			nlast = root->left;
+		}
+		if(root->right) {
+			qu.push(root->right);
+			nlast = root->right;
+		}
+		qu.pop();
+		nres.push_back(root->val);
+		if(root == last){
+			res.push_back(nres);
+			nres.clear();
+			last = nlast;
+		}
+	}
 
+	return res;
+}
 
 /*
  * 构建二叉树：（需要个节点元素值不一样）
