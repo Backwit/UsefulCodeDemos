@@ -1,7 +1,11 @@
-# LearnAlgorithm
-Some Basic Algorithm Implement by C++
+# Demoes of some Algorithm
 
-## ToDo
+
+# ToDo
+
+## Algorithm    
+
+Some Basic Algorithm Implement by C++    
 
 ### 排序 
 
@@ -64,11 +68,21 @@ Some Basic Algorithm Implement by C++
 
 
 
-### STL_Demo
+## STL    
 
-- [ ] 智能指针
-- [x] bind function callback
-- [ ] thread
+usage of stl...   
+
+- [ ] 智能指针   
+- [x] bind function callback   
+- [ ] thread   
+
+
+## Python   
+
+some python demoes   
+
+- [x] cmd wrapper  
+
 
 -------------------------------------------------
 
