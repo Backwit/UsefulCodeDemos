@@ -1,4 +1,4 @@
-# Demoes of some Algorithm
+# Demos of some Algorithm
 
 
 # ToDo
@@ -79,7 +79,7 @@ usage of stl...
 
 ## Python   
 
-some python demoes   
+some python demos   
 
 - [x] cmd wrapper  
 
