@@ -67,7 +67,7 @@ Some Basic Algorithm Implement by C++
 ### STL_Demo
 
 - [ ] 智能指针
-- [ ] bind function callback
+- [x] bind function callback
 - [ ] thread
 
 -------------------------------------------------
