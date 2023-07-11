@@ -83,6 +83,9 @@ some python demos
 
 - [x] cmd wrapper  
 
+## Linux or Unix API
+
+- [x] select_demo (disabled by signal)
 
 -------------------------------------------------
 
